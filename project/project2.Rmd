@@ -1,0 +1,263 @@
+---
+title: 'Project 2: Modeling, Testing, and Predicting'
+author: "Kirsten Hilling KAH4642"
+date: 'May '
+output:
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = knitr:::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE,fig.align="center",warning=FALSE,message=FALSE,fig.width=8, fig.height=5, linewidth=60)
+options(tibble.width = 100,width = 100)
+library(tidyverse)
+```
+## The dataset I am using in this project pertains to various social factors and health insurance charges. Specifically, it looks at age, sex, bmi, number of children, whether or not they are a smoker, region they live in the US, and their yearly charges through health insurance. There are 7 variables total and 1338 observations. I am interested to see whether or not there is an interaction between all of these factors and how much individuals pay for their health insurance charges. This is an increasingly relevant and important subject to look at, especially in light of COVID-19 showcasing the health disparities within the United States. 
+
+```{r}
+library(tidyverse)
+insurance <- read.csv("~/insurance.csv")
+man1 <- manova(cbind(age, bmi, charges)~sex, data=insurance)
+
+summary(man1)
+
+summary.aov(man1)
+
+insurance%>%group_by(sex)%>%summarize(mean(age),mean(bmi), mean(charges))
+
+pairwise.t.test(insurance$age,insurance$sex, p.adj="none")
+pairwise.t.test(insurance$bmi,insurance$sex, p.adj="none")
+pairwise.t.test(insurance$charges,insurance$sex, p.adj="none")
+
+.05/9
+
+```
+
+## When running the MANOVA test, we get a significant result, meaning at least one of the variables is different from the others. When performing the univariate Anova test, there is not a significant difference between male and female when looking at age, but there seems to be a significant difference between male and female in both BMI and charges. Next, post-hoc t tests looked further at the groups. Overall, 1 MANOVA test, 3 univariate ANOVAs, and 9 T-tests have been done (12 in total). The original unadjusted probability of a Type I error is .05, but adjusted is .0056. Before the adjustment, age had no significant difference, but BMI and charges did have significant differences between male and female. MANOVA tests have a lot of assumptions. It assumes that all the variables come from random samples and their own observations. It also assumes that the variables have multivariate normality and that there is equal variance for each DV. Finally, the test assumes that there aren't outliers involved. It is likely that the variables are random samplesand that there is normality, as this data has a relatively large sample size. Not all the assumptions are met, since this is common for MANOVA tests. Most likely, the assumption that there are no outliers is probably not met. 
+
+```{r, echo=FALSE}
+insurance%>%group_by(smoker)%>%
+  summarize(means=mean(charges))%>%summarize(`mean_diff`=diff(means))
+
+
+rand_dist<-vector() 
+
+for(i in 1:5000){
+new<-data.frame(charges=sample(insurance$charges),smoker=insurance$smoker) 
+rand_dist[i]<-mean(new[new$smoker=="yes",]$charges)-   
+              mean(new[new$smoker=="no",]$charges)} 
+
+{hist(rand_dist,main="",ylab=""); abline(v = c(-23615.96, 23615.96),col="red")}
+
+mean(rand_dist>23615.96 | rand_dist< -23615.96)
+
+t.test(data=insurance,charges~smoker,)
+```
+
+## In this test, the hypothesis is that there is a difference in insurance chargers between smokers and non-smokers. The null hypothesis is that there is no difference in insurance charges between smokers and non-smokers. A mean difference statistic was used to run the randomization test. In the actual dataset, the mean difference was 23,615.96. The mean of the randomly distributed set was 0. Since this is so low, we can reject the null hypothesis and say there is a difference in charges between those who smoke and those who do not. The p-value is also significant in the t-test done with the actual data. 
+
+```{r}
+library(sandwich)
+library(lmtest)
+insurance$bmi_c <- insurance$bmi - mean(insurance$bmi)
+summary(lm(charges~smoker*bmi_c,data=insurance))
+
+insurance %>% select(charges, smoker, bmi_c) %>% na.omit %>% ggplot(aes(charges, bmi_c, color=smoker)) + 
+geom_point()+geom_smooth(method="lm") + geom_vline(xintercept=mean(insurance$charges,na.rm=T),lty=2)
+
+fit1<-lm(charges~smoker*bmi_c,data=insurance)
+
+resids<-fit1$residuals
+fitvals<-fit1$fitted.values
+plot(fitvals,resids); abline(h=0, col='red')
+
+par(mfrow=c(1,2)); hist(resids); qqnorm(resids); qqline(resids, col='red')
+
+summary(fit1)
+
+coeftest(fit1, vcov=vcovHC(fit1)) 
+```
+
+
+## The intercept here means that the charges for the average non-smoker is now $8435.24. The smoker - yes coefficient means that people who are smokers have  predicted charges that are now $23,548.63 higher than the average non-smoker. The bmi (centered) coefficient means that for every one unit increase in BMI, there is an $83.35 increase in charges. Finally, for smokeryes:bmi_c, the slope of bmi on charges for smokers is now $1,389.76 greater than average. The model explains .74 of the variation. When checking for assumptions, the data is relatively linear. It is not completely linear, nor is it completely normal. It is decently normal, though and doesn't look too far off. When using the coeftest, all four interactions are significant, as they were originally. There is a significant interaction between charges, bmi, and whether or not someone was a smoker. 
+
+```{r}
+
+ fit<-lm(charges ~ smoker * bmi_c, data=insurance)
+  resids<-fit$residuals
+  fitted<-fit$fitted.values
+  
+  resid_resamp<-replicate(5000,{
+    new_resids<-sample(resids,replace=TRUE)
+    newdat<-insurance
+    newdat$new_y<-fitted+new_resids
+    fit<-lm(new_y ~ smoker * bmi_c, data = newdat)
+    coef(fit)
+})
+
+resid_resamp%>%t%>%as.data.frame%>%summarize_all(sd)
+```
+
+
+## The standard errors for the intercept, smokers, bmi, and the interaction between smokers and bmi are 186.98, 413.27, 31.14, and 66.85 respectively. The intercept and smoker SEs are slightly lower than the original SEs, and the bmi_c and smoker and bmi_c interaction SEs are pretty similar. Compared to the robust SEs, the intercept is higher, the smokers are lower, and the bmi and smoker and bmi_c interaction SEs are once again very similar. 
+
+```{r}
+library(tidyverse); library(lmtest)
+
+data<-insurance
+data$y<-ifelse(insurance$smoker=="yes",1,0) 
+
+fit<-glm(y~bmi+charges,data=data,family="binomial"(link=logit))
+summary(fit)
+
+exp(coef(fit))%>%round(3)
+
+data$prob<-predict(fit,type="response") 
+
+table(predict=as.numeric(data$prob>.5),truth=data$y)%>%addmargins
+
+#sensitivity
+mean(data[data$y==1,]$prob>.5)
+#specificity
+mean(data[data$y==0,]$prob<.5)
+#accuracy
+(1064/1338)
+#precision
+220/255
+
+data$logit<-predict(fit,type="link") #get predicted logit scores (logodds)
+
+data%>%ggplot()+geom_density(aes(logit,color=smoker,fill=smoker), alpha=.4)+
+  theme(legend.position=c(.85,.85))+geom_vline(xintercept=0)+xlab("predictor (logit)")
+
+library(plotROC) 
+ROCplot<-ggplot(data)+geom_roc(aes(d=y,m=prob), n.cuts=0) 
+ROCplot
+calc_auc(ROCplot)
+```
+
+## If there were 0 changes in BMI or Chargers, the odds of being a smoker are 2.621. For every one unit increase in BMI, the odds of being a smoker change by 0.753. For every one unit increase in charges, the odds of being a smoker are 1x that of the intercept. The sensitivity is 0.803, the specificity is 0.967, the accuracy is 0.795, and the precision is 0.863. The AUC is 0.982. The AUC shows how good the predictions of our model are, and with an AUC of 0.982, our model predicts around 98.2% of the outcomes (whether or not the individual is a smoker). 
+
+
+```{r}
+class_diag<-function(probs,truth){
+  
+  tab<-table(factor(probs>.5,levels=c("FALSE","TRUE")),truth)
+  acc=sum(diag(tab))/sum(tab)
+  sens=tab[2,2]/colSums(tab)[2]
+  spec=tab[1,1]/colSums(tab)[1]
+  ppv=tab[2,2]/rowSums(tab)[2]
+
+  if(is.numeric(truth)==FALSE & is.logical(truth)==FALSE) truth<-as.numeric(truth)-1
+  
+  ord<-order(probs, decreasing=TRUE)
+  probs <- probs[ord]; truth <- truth[ord]
+  
+  TPR=cumsum(truth)/max(1,sum(truth)) 
+  FPR=cumsum(!truth)/max(1,sum(!truth))
+  
+  dup<-c(probs[-1]>=probs[-length(probs)], FALSE)
+  TPR<-c(0,TPR[!dup],1); FPR<-c(0,FPR[!dup],1)
+  
+  n <- length(TPR)
+  auc<- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+
+  data.frame(acc,sens,spec,ppv,auc)
+}
+
+library(lmtest)
+data=insurance
+fit<-glm(smoker~.,data=data,family="binomial")
+coeftest(fit)
+exp(coef(fit))%>%round(3) 
+
+
+probs<-predict(fit,type="response")
+data$probs<-predict(fit,type="response")
+class_diag(probs, insurance$smoker)
+
+
+table(predict=as.numeric(data$probs>.5),truth=insurance$smoker)%>%addmargins
+```
+
+#Here, the variable "smoker" is being compared to all other variables in the insurance dataset. When running classification diagnositcs, the accuracy is 0.960, the sensitivity is 0.945, the specificity is 0.964, the precision is 0.872, and the auc is 0.987. This means that 98.7% of our model is correctly predicted (whether or not the individual is a smoker) by the other variables. 
+
+```{r}
+set.seed(1234)
+k=10
+data <- insurance %>% sample_frac 
+folds <- ntile(1:nrow(data),n=10) 
+
+diags<-NULL
+for(i in 1:k){
+  train <- data[folds!=i,] 
+  test <- data[folds==i,] 
+  truth <- test$smoker 
+  
+  fit <- glm(smoker~., data=insurance, family="binomial")
+  probs <- predict(fit, newdata=test, type="response")
+  
+  diags<-rbind(diags,class_diag(probs,truth))
+}
+
+summarize_all(diags,mean)
+```
+## When running the 10-fold cross validation, we get an accuracy of 0.960, a sensitivity of 0.947, a specificity of 0.964, a precision of 0.875, and an auc of 0.987. Compared to the in-sample statistics, all of the diagnositcs are within .01 of each other, meaning they are very similar. 
+
+
+```{r}
+library(glmnet)
+set.seed(1234)
+
+model.matrix(smoker~.,data=insurance)[,-1]
+
+library(glmnet)
+y<-as.matrix(insurance$smoker) 
+x<-model.matrix(smoker~.,data=insurance)[,-1] 
+head(x)
+
+cv<-cv.glmnet(x,y,family="binomial")
+lasso<-glmnet(x,y,family="binomial",lambda=cv$lambda.1se)
+coef(lasso)
+
+lasso_dat <- insurance %>% mutate(smoker= ifelse(smoker=="yes", 1, 0)) 
+set.seed(1234)
+k=10
+
+data1 <- lasso_dat %>% sample_frac 
+folds <- ntile(1:nrow(data),n=10) 
+
+diags1<-NULL
+for(i in 1:k){
+  train <- data1[folds!=i,] 
+  test <- data1[folds==i,] 
+  truth <- test$smoker
+  
+  fit1 <- glm(smoker~., 
+             data=data1, family="binomial")
+  probs1 <- predict(fit1, newdata=test, type="response")
+  
+  diags<-rbind(diags1,class_diag(probs1,truth))
+}
+
+diags%>%summarize_all(mean)
+```
+## The variables that are retained are age and bmi. The reason why these variables are the ones that are in the LASSO output is because they are very significant and are tied to whether or not an individual is a smoker. The out of sample AUC here is 0.991, which is a little higher than the in-sample AUC (0.987). 
+
+

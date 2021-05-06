@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on Kirsten Hilling</title>
+    <link>/project/</link>
+    <description>Recent content in Projects on Kirsten Hilling</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language><atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Project 2: Modeling, Testing, and Predicting</title>
+      <link>/project/project2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project/project2/</guid>
+      <description>The dataset I am using in this project pertains to various social factors and health insurance charges. Specifically, it looks at age, sex, bmi, number of children, whether or not they are a smoker, region they live in the US, and their yearly charges through health insurance. There are 7 variables total and 1338 observations. I am interested to see whether or not there is an interaction between all of these factors and how much individuals pay for their health insurance charges.</description>
+    </item>
+    
+    <item>
+      <title>Project1</title>
+      <link>/project/project1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project/project1/</guid>
+      <description>knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = &amp;quot;center&amp;quot;, warning = F, message = F, tidy=TRUE, tidy.opts=list(width.cutoff=60), R.options=list(max.print=100)) In this project, I am going to be using the World Happiness Report data from 2016 and a Happiness and Alcohol Consumption dataset from 2016. The first data set contains the rankings and scores from the World Happiness Report which measures the average happiness in each country based on several factors.</description>
+    </item>
+    
+  </channel>
+</rss>

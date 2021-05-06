@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Kirsten Hilling" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/favicon.ico">
+    <title>Project1</title>
+    <meta name="generator" content="Hugo 0.83.1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="../../post/">BLOG</a></li>
+        
+        <li><a href="../../projects/">PROJECTS</a></li>
+        
+        <li><a href="../../resume/">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="../../project/project1/">Project1</a></strong>
+          </h3>
+        </div>
+ 
+<div class="blog-title">
+          <h4>
+         January 1, 0001 
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+<script src="../../rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="../../rmarkdown-libs/plotly-binding/plotly.js"></script>
+<script src="../../rmarkdown-libs/typedarray/typedarray.min.js"></script>
+<script src="../../rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="../../rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="../../rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="../../rmarkdown-libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="../../rmarkdown-libs/plotly-main/plotly-latest.min.js"></script>
+
+
+<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = &quot;center&quot;, warning = F, message = F,
+tidy=TRUE, tidy.opts=list(width.cutoff=60), R.options=list(max.print=100))</code></pre>
+<div id="in-this-project-i-am-going-to-be-using-the-world-happiness-report-data-from-2016-and-a-happiness-and-alcohol-consumption-dataset-from-2016.-the-first-data-set-contains-the-rankings-and-scores-from-the-world-happiness-report-which-measures-the-average-happiness-in-each-country-based-on-several-factors.-this-reports-data-also-includes-gdp-per-capita-life-expectancy-and-government-trust-factors.-the-second-dataset-looks-at-alcohol-consumption-beer-wine-and-spirits-in-each-country." class="section level2">
+<h2>In this project, I am going to be using the World Happiness Report data from 2016 and a Happiness and Alcohol Consumption dataset from 2016. The first data set contains the rankings and scores from the World Happiness Report which measures the average happiness in each country based on several factors. This report’s data also includes GDP per capita, Life Expectancy, and Government Trust factors. The second dataset looks at alcohol consumption (Beer, Wine, and Spirits) in each country.</h2>
+</div>
+<div id="i-learned-about-the-world-happiness-report-in-one-of-my-other-classes-society-health-and-happiness.-i-was-interested-to-see-the-factors-that-go-into-each-countrys-happiness-and-i-pulled-this-data-into-r.-i-then-began-searching-for-other-datasets-looking-at-different-countries-happiness.-i-found-a-dataset-about-alcohol-consumption-on-a-public-data-site-and-downloaded-it.-when-i-merge-the-data-together-i-am-expecting-to-see-correlations-between-higher-gdp-levels-and-higher-happiness-scores.-i-also-am-curious-to-see-if-there-are-any-correlations-between-happiness-alcohol-and-a-combination-of-the-other-factors-included-in-the-world-happiness-report." class="section level1">
+<h1>I learned about the World Happiness Report in one of my other classes, Society, Health and Happiness. I was interested to see the factors that go into each country’s happiness and I pulled this data into R. I then began searching for other datasets looking at different countries’ happiness. I found a dataset about Alcohol Consumption on a public data site and downloaded it. When I merge the data together, I am expecting to see correlations between higher GDP levels and higher happiness scores. I also am curious to see if there are any correlations between happiness, alcohol, and a combination of the other factors included in the World Happiness Report.</h1>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
+## ✓ tibble  3.0.4     ✓ dplyr   1.0.2
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.4.0     ✓ forcats 0.5.0</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>WHR &lt;- read.csv(&quot;~/2016.csv&quot;)
+HAC &lt;- read.csv(&quot;~/HappinessAlcoholConsumption.csv&quot;)
+
+glimpse(WHR)</code></pre>
+<pre><code>## Rows: 157
+## Columns: 13
+## $ Country                       &lt;fct&gt; Denmark, Switzerland, Iceland, Norway, …
+## $ Region                        &lt;fct&gt; Western Europe, Western Europe, Western…
+## $ Happiness.Rank                &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, …
+## $ Happiness.Score               &lt;dbl&gt; 7.526, 7.509, 7.501, 7.498, 7.413, 7.40…
+## $ Lower.Confidence.Interval     &lt;dbl&gt; 7.460, 7.428, 7.333, 7.421, 7.351, 7.33…
+## $ Upper.Confidence.Interval     &lt;dbl&gt; 7.592, 7.590, 7.669, 7.575, 7.475, 7.47…
+## $ Economy..GDP.per.Capita.      &lt;dbl&gt; 1.44178, 1.52733, 1.42666, 1.57744, 1.4…
+## $ Family                        &lt;dbl&gt; 1.16374, 1.14524, 1.18326, 1.12690, 1.1…
+## $ Health..Life.Expectancy.      &lt;dbl&gt; 0.79504, 0.86303, 0.86733, 0.79579, 0.8…
+## $ Freedom                       &lt;dbl&gt; 0.57941, 0.58557, 0.56624, 0.59609, 0.5…
+## $ Trust..Government.Corruption. &lt;dbl&gt; 0.44453, 0.41203, 0.14975, 0.35776, 0.4…
+## $ Generosity                    &lt;dbl&gt; 0.36171, 0.28083, 0.47678, 0.37895, 0.2…
+## $ Dystopia.Residual             &lt;dbl&gt; 2.73939, 2.69463, 2.83137, 2.66465, 2.8…</code></pre>
+<pre class="r"><code>glimpse(HAC)</code></pre>
+<pre><code>## Rows: 122
+## Columns: 9
+## $ Country          &lt;fct&gt; Denmark, Switzerland, Iceland, Norway, Finland, Cana…
+## $ Region           &lt;fct&gt; Western Europe, Western Europe, Western Europe, West…
+## $ Hemisphere       &lt;fct&gt; north, north, north, north, north, north, north, sou…
+## $ HappinessScore   &lt;dbl&gt; 7.526, 7.509, 7.501, 7.498, 7.413, 7.404, 7.339, 7.3…
+## $ HDI              &lt;int&gt; 928, 943, 933, 951, 918, 922, 928, 915, 938, 932, 90…
+## $ GDP_PerCapita    &lt;dbl&gt; 53.579, 79.866, 60.530, 70.890, 43.433, 42.349, 45.6…
+## $ Beer_PerCapita   &lt;int&gt; 224, 185, 233, 169, 263, 240, 251, 203, 261, 152, 63…
+## $ Spirit_PerCapita &lt;int&gt; 81, 100, 61, 71, 133, 122, 88, 79, 72, 60, 69, 75, 1…
+## $ Wine_PerCapita   &lt;int&gt; 278, 280, 78, 129, 97, 100, 190, 175, 212, 186, 9, 1…</code></pre>
+<p>#I uploaded two files, one from the World Happiness Report based on country and one based on Happiness and Alcohol Consumption by country. Both are from 2016.</p>
+<pre class="r"><code>WHR.HAC &lt;- WHR %&gt;% full_join(HAC, by=c(&quot;Happiness.Score&quot;=&quot;HappinessScore&quot;, &quot;Region&quot;, &quot;Country&quot;))
+glimpse(WHR.HAC) #161 rows</code></pre>
+<pre><code>## Rows: 161
+## Columns: 19
+## $ Country                       &lt;fct&gt; Denmark, Switzerland, Iceland, Norway, …
+## $ Region                        &lt;fct&gt; Western Europe, Western Europe, Western…
+## $ Happiness.Rank                &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, …
+## $ Happiness.Score               &lt;dbl&gt; 7.526, 7.509, 7.501, 7.498, 7.413, 7.40…
+## $ Lower.Confidence.Interval     &lt;dbl&gt; 7.460, 7.428, 7.333, 7.421, 7.351, 7.33…
+## $ Upper.Confidence.Interval     &lt;dbl&gt; 7.592, 7.590, 7.669, 7.575, 7.475, 7.47…
+## $ Economy..GDP.per.Capita.      &lt;dbl&gt; 1.44178, 1.52733, 1.42666, 1.57744, 1.4…
+## $ Family                        &lt;dbl&gt; 1.16374, 1.14524, 1.18326, 1.12690, 1.1…
+## $ Health..Life.Expectancy.      &lt;dbl&gt; 0.79504, 0.86303, 0.86733, 0.79579, 0.8…
+## $ Freedom                       &lt;dbl&gt; 0.57941, 0.58557, 0.56624, 0.59609, 0.5…
+## $ Trust..Government.Corruption. &lt;dbl&gt; 0.44453, 0.41203, 0.14975, 0.35776, 0.4…
+## $ Generosity                    &lt;dbl&gt; 0.36171, 0.28083, 0.47678, 0.37895, 0.2…
+## $ Dystopia.Residual             &lt;dbl&gt; 2.73939, 2.69463, 2.83137, 2.66465, 2.8…
+## $ Hemisphere                    &lt;fct&gt; north, north, north, north, north, nort…
+## $ HDI                           &lt;int&gt; 928, 943, 933, 951, 918, 922, 928, 915,…
+## $ GDP_PerCapita                 &lt;dbl&gt; 53.579, 79.866, 60.530, 70.890, 43.433,…
+## $ Beer_PerCapita                &lt;int&gt; 224, 185, 233, 169, 263, 240, 251, 203,…
+## $ Spirit_PerCapita              &lt;int&gt; 81, 100, 61, 71, 133, 122, 88, 79, 72, …
+## $ Wine_PerCapita                &lt;int&gt; 278, 280, 78, 129, 97, 100, 190, 175, 2…</code></pre>
+<pre class="r"><code>glimpse(WHR) #157 rows</code></pre>
+<pre><code>## Rows: 157
+## Columns: 13
+## $ Country                       &lt;fct&gt; Denmark, Switzerland, Iceland, Norway, …
+## $ Region                        &lt;fct&gt; Western Europe, Western Europe, Western…
+## $ Happiness.Rank                &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, …
+## $ Happiness.Score               &lt;dbl&gt; 7.526, 7.509, 7.501, 7.498, 7.413, 7.40…
+## $ Lower.Confidence.Interval     &lt;dbl&gt; 7.460, 7.428, 7.333, 7.421, 7.351, 7.33…
+## $ Upper.Confidence.Interval     &lt;dbl&gt; 7.592, 7.590, 7.669, 7.575, 7.475, 7.47…
+## $ Economy..GDP.per.Capita.      &lt;dbl&gt; 1.44178, 1.52733, 1.42666, 1.57744, 1.4…
+## $ Family                        &lt;dbl&gt; 1.16374, 1.14524, 1.18326, 1.12690, 1.1…
+## $ Health..Life.Expectancy.      &lt;dbl&gt; 0.79504, 0.86303, 0.86733, 0.79579, 0.8…
+## $ Freedom                       &lt;dbl&gt; 0.57941, 0.58557, 0.56624, 0.59609, 0.5…
+## $ Trust..Government.Corruption. &lt;dbl&gt; 0.44453, 0.41203, 0.14975, 0.35776, 0.4…
+## $ Generosity                    &lt;dbl&gt; 0.36171, 0.28083, 0.47678, 0.37895, 0.2…
+## $ Dystopia.Residual             &lt;dbl&gt; 2.73939, 2.69463, 2.83137, 2.66465, 2.8…</code></pre>
+<pre class="r"><code>glimpse(HAC) #122 rows</code></pre>
+<pre><code>## Rows: 122
+## Columns: 9
+## $ Country          &lt;fct&gt; Denmark, Switzerland, Iceland, Norway, Finland, Cana…
+## $ Region           &lt;fct&gt; Western Europe, Western Europe, Western Europe, West…
+## $ Hemisphere       &lt;fct&gt; north, north, north, north, north, north, north, sou…
+## $ HappinessScore   &lt;dbl&gt; 7.526, 7.509, 7.501, 7.498, 7.413, 7.404, 7.339, 7.3…
+## $ HDI              &lt;int&gt; 928, 943, 933, 951, 918, 922, 928, 915, 938, 932, 90…
+## $ GDP_PerCapita    &lt;dbl&gt; 53.579, 79.866, 60.530, 70.890, 43.433, 42.349, 45.6…
+## $ Beer_PerCapita   &lt;int&gt; 224, 185, 233, 169, 263, 240, 251, 203, 261, 152, 63…
+## $ Spirit_PerCapita &lt;int&gt; 81, 100, 61, 71, 133, 122, 88, 79, 72, 60, 69, 75, 1…
+## $ Wine_PerCapita   &lt;int&gt; 278, 280, 78, 129, 97, 100, 190, 175, 212, 186, 9, 1…</code></pre>
+<pre class="r"><code>sum(HAC$Country %in% WHR$Country)</code></pre>
+<pre><code>## [1] 118</code></pre>
+<pre class="r"><code>setdiff(HAC$Country, WHR$Country)</code></pre>
+<pre><code>## [1] &quot;Russian Federation&quot; &quot;Dem. Rep. Congo&quot;    &quot;Rep. Congo&quot;        
+## [4] &quot;Cote d&#39;Ivoire&quot;</code></pre>
+<pre class="r"><code>122-118</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>glimpse(WHR.HAC)</code></pre>
+<pre><code>## Rows: 161
+## Columns: 19
+## $ Country                       &lt;fct&gt; Denmark, Switzerland, Iceland, Norway, …
+## $ Region                        &lt;fct&gt; Western Europe, Western Europe, Western…
+## $ Happiness.Rank                &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, …
+## $ Happiness.Score               &lt;dbl&gt; 7.526, 7.509, 7.501, 7.498, 7.413, 7.40…
+## $ Lower.Confidence.Interval     &lt;dbl&gt; 7.460, 7.428, 7.333, 7.421, 7.351, 7.33…
+## $ Upper.Confidence.Interval     &lt;dbl&gt; 7.592, 7.590, 7.669, 7.575, 7.475, 7.47…
+## $ Economy..GDP.per.Capita.      &lt;dbl&gt; 1.44178, 1.52733, 1.42666, 1.57744, 1.4…
+## $ Family                        &lt;dbl&gt; 1.16374, 1.14524, 1.18326, 1.12690, 1.1…
+## $ Health..Life.Expectancy.      &lt;dbl&gt; 0.79504, 0.86303, 0.86733, 0.79579, 0.8…
+## $ Freedom                       &lt;dbl&gt; 0.57941, 0.58557, 0.56624, 0.59609, 0.5…
+## $ Trust..Government.Corruption. &lt;dbl&gt; 0.44453, 0.41203, 0.14975, 0.35776, 0.4…
+## $ Generosity                    &lt;dbl&gt; 0.36171, 0.28083, 0.47678, 0.37895, 0.2…
+## $ Dystopia.Residual             &lt;dbl&gt; 2.73939, 2.69463, 2.83137, 2.66465, 2.8…
+## $ Hemisphere                    &lt;fct&gt; north, north, north, north, north, nort…
+## $ HDI                           &lt;int&gt; 928, 943, 933, 951, 918, 922, 928, 915,…
+## $ GDP_PerCapita                 &lt;dbl&gt; 53.579, 79.866, 60.530, 70.890, 43.433,…
+## $ Beer_PerCapita                &lt;int&gt; 224, 185, 233, 169, 263, 240, 251, 203,…
+## $ Spirit_PerCapita              &lt;int&gt; 81, 100, 61, 71, 133, 122, 88, 79, 72, …
+## $ Wine_PerCapita                &lt;int&gt; 278, 280, 78, 129, 97, 100, 190, 175, 2…</code></pre>
+<pre class="r"><code>Pivot&lt;- WHR.HAC %&gt;% pivot_longer(cols=c(&quot;Beer_PerCapita&quot;,&quot;Wine_PerCapita&quot;), names_to=&quot;TypeofAlc&quot;, values_to=&quot;BeerWine_PerCapita&quot;)
+glimpse(Pivot)</code></pre>
+<pre><code>## Rows: 322
+## Columns: 19
+## $ Country                       &lt;fct&gt; Denmark, Denmark, Switzerland, Switzerl…
+## $ Region                        &lt;fct&gt; Western Europe, Western Europe, Western…
+## $ Happiness.Rank                &lt;int&gt; 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, …
+## $ Happiness.Score               &lt;dbl&gt; 7.526, 7.526, 7.509, 7.509, 7.501, 7.50…
+## $ Lower.Confidence.Interval     &lt;dbl&gt; 7.460, 7.460, 7.428, 7.428, 7.333, 7.33…
+## $ Upper.Confidence.Interval     &lt;dbl&gt; 7.592, 7.592, 7.590, 7.590, 7.669, 7.66…
+## $ Economy..GDP.per.Capita.      &lt;dbl&gt; 1.44178, 1.44178, 1.52733, 1.52733, 1.4…
+## $ Family                        &lt;dbl&gt; 1.16374, 1.16374, 1.14524, 1.14524, 1.1…
+## $ Health..Life.Expectancy.      &lt;dbl&gt; 0.79504, 0.79504, 0.86303, 0.86303, 0.8…
+## $ Freedom                       &lt;dbl&gt; 0.57941, 0.57941, 0.58557, 0.58557, 0.5…
+## $ Trust..Government.Corruption. &lt;dbl&gt; 0.44453, 0.44453, 0.41203, 0.41203, 0.1…
+## $ Generosity                    &lt;dbl&gt; 0.36171, 0.36171, 0.28083, 0.28083, 0.4…
+## $ Dystopia.Residual             &lt;dbl&gt; 2.73939, 2.73939, 2.69463, 2.69463, 2.8…
+## $ Hemisphere                    &lt;fct&gt; north, north, north, north, north, nort…
+## $ HDI                           &lt;int&gt; 928, 928, 943, 943, 933, 933, 951, 951,…
+## $ GDP_PerCapita                 &lt;dbl&gt; 53.579, 53.579, 79.866, 79.866, 60.530,…
+## $ Spirit_PerCapita              &lt;int&gt; 81, 81, 100, 100, 61, 61, 71, 71, 133, …
+## $ TypeofAlc                     &lt;chr&gt; &quot;Beer_PerCapita&quot;, &quot;Wine_PerCapita&quot;, &quot;Be…
+## $ BeerWine_PerCapita            &lt;int&gt; 224, 278, 185, 280, 233, 78, 169, 129, …</code></pre>
+<pre class="r"><code>Pivot1 &lt;- Pivot %&gt;% pivot_wider(names_from=&quot;TypeofAlc&quot;, values_from=&quot;BeerWine_PerCapita&quot;)
+glimpse(Pivot1)</code></pre>
+<pre><code>## Rows: 161
+## Columns: 19
+## $ Country                       &lt;fct&gt; Denmark, Switzerland, Iceland, Norway, …
+## $ Region                        &lt;fct&gt; Western Europe, Western Europe, Western…
+## $ Happiness.Rank                &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, …
+## $ Happiness.Score               &lt;dbl&gt; 7.526, 7.509, 7.501, 7.498, 7.413, 7.40…
+## $ Lower.Confidence.Interval     &lt;dbl&gt; 7.460, 7.428, 7.333, 7.421, 7.351, 7.33…
+## $ Upper.Confidence.Interval     &lt;dbl&gt; 7.592, 7.590, 7.669, 7.575, 7.475, 7.47…
+## $ Economy..GDP.per.Capita.      &lt;dbl&gt; 1.44178, 1.52733, 1.42666, 1.57744, 1.4…
+## $ Family                        &lt;dbl&gt; 1.16374, 1.14524, 1.18326, 1.12690, 1.1…
+## $ Health..Life.Expectancy.      &lt;dbl&gt; 0.79504, 0.86303, 0.86733, 0.79579, 0.8…
+## $ Freedom                       &lt;dbl&gt; 0.57941, 0.58557, 0.56624, 0.59609, 0.5…
+## $ Trust..Government.Corruption. &lt;dbl&gt; 0.44453, 0.41203, 0.14975, 0.35776, 0.4…
+## $ Generosity                    &lt;dbl&gt; 0.36171, 0.28083, 0.47678, 0.37895, 0.2…
+## $ Dystopia.Residual             &lt;dbl&gt; 2.73939, 2.69463, 2.83137, 2.66465, 2.8…
+## $ Hemisphere                    &lt;fct&gt; north, north, north, north, north, nort…
+## $ HDI                           &lt;int&gt; 928, 943, 933, 951, 918, 922, 928, 915,…
+## $ GDP_PerCapita                 &lt;dbl&gt; 53.579, 79.866, 60.530, 70.890, 43.433,…
+## $ Spirit_PerCapita              &lt;int&gt; 81, 100, 61, 71, 133, 122, 88, 79, 72, …
+## $ Beer_PerCapita                &lt;int&gt; 224, 185, 233, 169, 263, 240, 251, 203,…
+## $ Wine_PerCapita                &lt;int&gt; 278, 280, 78, 129, 97, 100, 190, 175, 2…</code></pre>
+<p>#I decided to full join these datasets based off of Happiness Score. Both datasets have similar variables, including Happiness Score and Country.I wanted to full join to retain all of the data from both datasets, but add the other data from the Happiness and Alcohol Consumption dataset to the World Happiness Report data.
+# To do this, I joined both datasets based off of Happiness Score, Region, and Country. I was able to pipe the “WHR” dataset into the “HAC” dataset through the “full_join” function.
+# The only adjustment I had to make to make sure the columns aligned was to specify that “Happiness.Score” and “HappinessScore” in the WHR and HAC datasets respectively were the same variable.
+# After the join, I was able to compare whether or not rows were dropped.There were originally 157 rows in the “WHR” dataset and 122 rows in the “HAC” dataset. In the joined dataset, there were 161 rows. Using the “sum” and %in% functions, I was able to find that 118 rows from “HAC” were matched in “WHR”. Overall, 4 rows were dropped. The “setdiff” function allowed me to figure out that “Russian Federation”, “Dem. Rep. Congo”, “Rep. Congo”, and “Cote d’Ivoire” were the observations dropped. I also rearranged the tables using pivot longer and wider. Beer and Wine per capita were combined to one alcohol column and the values were in one column. I then created the two columns once again.</p>
+<pre class="r"><code>library(tidyverse)
+Ex1 &lt;- WHR.HAC %&gt;% filter(Happiness.Score&gt;=7 &amp; Spirit_PerCapita &gt;80) %&gt;% arrange(desc(Happiness.Score), desc(Spirit_PerCapita))
+
+Ex2 &lt;- WHR.HAC %&gt;% select(Country, Happiness.Rank, Happiness.Score, Liquor_PerCapita=Spirit_PerCapita, everything()) </code></pre>
+<p>#Next, I filtered the joined dataeset by calling only countries that had Happiness Scores greater than or equal to 7. and Spirit per Capity greater than 80. I wanted to see which countries had a high happiness score, but also consumed a relatively large amount of alcohol. There were 19 countries, and Denmark came in first place for higher Happiness rank in 2016. Denmark’s Spirit per Capita was 81. The second country, Switzerland, had a 100 Spirit per Capita, which is interesting to see that their happiness levels are still so high.</p>
+<pre class="r"><code>WHR.HAC1 &lt;-  WHR.HAC%&gt;%mutate(lifeexp_cat = case_when(Health..Life.Expectancy.&gt;0.75 ~ &quot;high&quot;,
+Health..Life.Expectancy.&lt;=0.75 &amp; 0.25&lt;=Health..Life.Expectancy. ~ &quot;med&quot;,
+Health..Life.Expectancy.&lt;0.25 ~ &quot;low&quot;))
+glimpse(WHR.HAC1)</code></pre>
+<pre><code>## Rows: 161
+## Columns: 20
+## $ Country                       &lt;fct&gt; Denmark, Switzerland, Iceland, Norway, …
+## $ Region                        &lt;fct&gt; Western Europe, Western Europe, Western…
+## $ Happiness.Rank                &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, …
+## $ Happiness.Score               &lt;dbl&gt; 7.526, 7.509, 7.501, 7.498, 7.413, 7.40…
+## $ Lower.Confidence.Interval     &lt;dbl&gt; 7.460, 7.428, 7.333, 7.421, 7.351, 7.33…
+## $ Upper.Confidence.Interval     &lt;dbl&gt; 7.592, 7.590, 7.669, 7.575, 7.475, 7.47…
+## $ Economy..GDP.per.Capita.      &lt;dbl&gt; 1.44178, 1.52733, 1.42666, 1.57744, 1.4…
+## $ Family                        &lt;dbl&gt; 1.16374, 1.14524, 1.18326, 1.12690, 1.1…
+## $ Health..Life.Expectancy.      &lt;dbl&gt; 0.79504, 0.86303, 0.86733, 0.79579, 0.8…
+## $ Freedom                       &lt;dbl&gt; 0.57941, 0.58557, 0.56624, 0.59609, 0.5…
+## $ Trust..Government.Corruption. &lt;dbl&gt; 0.44453, 0.41203, 0.14975, 0.35776, 0.4…
+## $ Generosity                    &lt;dbl&gt; 0.36171, 0.28083, 0.47678, 0.37895, 0.2…
+## $ Dystopia.Residual             &lt;dbl&gt; 2.73939, 2.69463, 2.83137, 2.66465, 2.8…
+## $ Hemisphere                    &lt;fct&gt; north, north, north, north, north, nort…
+## $ HDI                           &lt;int&gt; 928, 943, 933, 951, 918, 922, 928, 915,…
+## $ GDP_PerCapita                 &lt;dbl&gt; 53.579, 79.866, 60.530, 70.890, 43.433,…
+## $ Beer_PerCapita                &lt;int&gt; 224, 185, 233, 169, 263, 240, 251, 203,…
+## $ Spirit_PerCapita              &lt;int&gt; 81, 100, 61, 71, 133, 122, 88, 79, 72, …
+## $ Wine_PerCapita                &lt;int&gt; 278, 280, 78, 129, 97, 100, 190, 175, 2…
+## $ lifeexp_cat                   &lt;chr&gt; &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;,…</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(sd(Happiness.Score, na.rm=T))</code></pre>
+<pre><code>##   sd(Happiness.Score, na.rm = T)
+## 1                       1.140691</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(min(Happiness.Score, na.rm=T))</code></pre>
+<pre><code>##   min(Happiness.Score, na.rm = T)
+## 1                           2.905</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(max(Happiness.Score, na.rm=T))</code></pre>
+<pre><code>##   max(Happiness.Score, na.rm = T)
+## 1                           7.526</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% group_by(Country) %&gt;% summarize(sd(Happiness.Score, na.rm=T))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 161 x 2
+##    Country     `sd(Happiness.Score, na.rm = T)`
+##    &lt;fct&gt;                                  &lt;dbl&gt;
+##  1 Afghanistan                               NA
+##  2 Albania                                   NA
+##  3 Algeria                                   NA
+##  4 Angola                                    NA
+##  5 Argentina                                 NA
+##  6 Armenia                                   NA
+##  7 Australia                                 NA
+##  8 Austria                                   NA
+##  9 Azerbaijan                                NA
+## 10 Bahrain                                   NA
+## # … with 151 more rows</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% group_by(Country) %&gt;% summarize(min(Happiness.Score, na.rm=T))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 161 x 2
+##    Country     `min(Happiness.Score, na.rm = T)`
+##    &lt;fct&gt;                                   &lt;dbl&gt;
+##  1 Afghanistan                              3.36
+##  2 Albania                                  4.66
+##  3 Algeria                                  6.36
+##  4 Angola                                   3.87
+##  5 Argentina                                6.65
+##  6 Armenia                                  4.36
+##  7 Australia                                7.31
+##  8 Austria                                  7.12
+##  9 Azerbaijan                               5.29
+## 10 Bahrain                                  6.22
+## # … with 151 more rows</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% group_by(Country) %&gt;% summarize(max(Happiness.Score, na.rm=T))</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 161 x 2
+##    Country     `max(Happiness.Score, na.rm = T)`
+##    &lt;fct&gt;                                   &lt;dbl&gt;
+##  1 Afghanistan                              3.36
+##  2 Albania                                  4.66
+##  3 Algeria                                  6.36
+##  4 Angola                                   3.87
+##  5 Argentina                                6.65
+##  6 Armenia                                  4.36
+##  7 Australia                                7.31
+##  8 Austria                                  7.12
+##  9 Azerbaijan                               5.29
+## 10 Bahrain                                  6.22
+## # … with 151 more rows</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(sd(Lower.Confidence.Interval, na.rm=T))</code></pre>
+<pre><code>##   sd(Lower.Confidence.Interval, na.rm = T)
+## 1                                 1.148043</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(min(Upper.Confidence.Interval, na.rm=T))</code></pre>
+<pre><code>##   min(Upper.Confidence.Interval, na.rm = T)
+## 1                                     3.078</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(max(Upper.Confidence.Interval, na.rm=T))</code></pre>
+<pre><code>##   max(Upper.Confidence.Interval, na.rm = T)
+## 1                                     7.669</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(sd(Lower.Confidence.Interval, na.rm=T))</code></pre>
+<pre><code>##   sd(Lower.Confidence.Interval, na.rm = T)
+## 1                                 1.148043</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(min(Upper.Confidence.Interval, na.rm=T))</code></pre>
+<pre><code>##   min(Upper.Confidence.Interval, na.rm = T)
+## 1                                     3.078</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% group_by(Country, Region) %&gt;% summarize(sd(Lower.Confidence.Interval, na.rm=T))</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;Country&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 161 x 3
+## # Groups:   Country [161]
+##    Country     Region                      `sd(Lower.Confidence.Interval, na.rm…
+##    &lt;fct&gt;       &lt;fct&gt;                                                       &lt;dbl&gt;
+##  1 Afghanistan Southern Asia                                                  NA
+##  2 Albania     Central and Eastern Europe                                     NA
+##  3 Algeria     Middle East and Northern A…                                    NA
+##  4 Angola      Sub-Saharan Africa                                             NA
+##  5 Argentina   Latin America and Caribbean                                    NA
+##  6 Armenia     Central and Eastern Europe                                     NA
+##  7 Australia   Australia and New Zealand                                      NA
+##  8 Austria     Western Europe                                                 NA
+##  9 Azerbaijan  Central and Eastern Europe                                     NA
+## 10 Bahrain     Middle East and Northern A…                                    NA
+## # … with 151 more rows</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% group_by(Country, Region) %&gt;% summarize(min(Upper.Confidence.Interval, na.rm=T))</code></pre>
+<pre><code>## Warning in min(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to min; returning Inf
+
+## Warning in min(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to min; returning Inf
+
+## Warning in min(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to min; returning Inf
+
+## Warning in min(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to min; returning Inf</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;Country&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 161 x 3
+## # Groups:   Country [161]
+##    Country     Region                     `min(Upper.Confidence.Interval, na.rm…
+##    &lt;fct&gt;       &lt;fct&gt;                                                       &lt;dbl&gt;
+##  1 Afghanistan Southern Asia                                                3.43
+##  2 Albania     Central and Eastern Europe                                   4.76
+##  3 Algeria     Middle East and Northern …                                   6.48
+##  4 Angola      Sub-Saharan Africa                                           3.98
+##  5 Argentina   Latin America and Caribbe…                                   6.74
+##  6 Armenia     Central and Eastern Europe                                   4.45
+##  7 Australia   Australia and New Zealand                                    7.38
+##  8 Austria     Western Europe                                               7.19
+##  9 Azerbaijan  Central and Eastern Europe                                   5.36
+## 10 Bahrain     Middle East and Northern …                                   6.31
+## # … with 151 more rows</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% group_by(Country, Region) %&gt;% summarize(max(Upper.Confidence.Interval, na.rm=T)) </code></pre>
+<pre><code>## Warning in max(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to max; returning -Inf</code></pre>
+<pre><code>## Warning in max(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to max; returning -Inf
+
+## Warning in max(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to max; returning -Inf
+
+## Warning in max(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to max; returning -Inf</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;Country&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 161 x 3
+## # Groups:   Country [161]
+##    Country     Region                     `max(Upper.Confidence.Interval, na.rm…
+##    &lt;fct&gt;       &lt;fct&gt;                                                       &lt;dbl&gt;
+##  1 Afghanistan Southern Asia                                                3.43
+##  2 Albania     Central and Eastern Europe                                   4.76
+##  3 Algeria     Middle East and Northern …                                   6.48
+##  4 Angola      Sub-Saharan Africa                                           3.98
+##  5 Argentina   Latin America and Caribbe…                                   6.74
+##  6 Armenia     Central and Eastern Europe                                   4.45
+##  7 Australia   Australia and New Zealand                                    7.38
+##  8 Austria     Western Europe                                               7.19
+##  9 Azerbaijan  Central and Eastern Europe                                   5.36
+## 10 Bahrain     Middle East and Northern …                                   6.31
+## # … with 151 more rows</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% group_by(Country, Region) %&gt;% summarize(sd(Lower.Confidence.Interval, na.rm=T))</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;Country&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 161 x 3
+## # Groups:   Country [161]
+##    Country     Region                      `sd(Lower.Confidence.Interval, na.rm…
+##    &lt;fct&gt;       &lt;fct&gt;                                                       &lt;dbl&gt;
+##  1 Afghanistan Southern Asia                                                  NA
+##  2 Albania     Central and Eastern Europe                                     NA
+##  3 Algeria     Middle East and Northern A…                                    NA
+##  4 Angola      Sub-Saharan Africa                                             NA
+##  5 Argentina   Latin America and Caribbean                                    NA
+##  6 Armenia     Central and Eastern Europe                                     NA
+##  7 Australia   Australia and New Zealand                                      NA
+##  8 Austria     Western Europe                                                 NA
+##  9 Azerbaijan  Central and Eastern Europe                                     NA
+## 10 Bahrain     Middle East and Northern A…                                    NA
+## # … with 151 more rows</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% group_by(Country, Region) %&gt;% summarize(min(Upper.Confidence.Interval, na.rm=T))</code></pre>
+<pre><code>## Warning in min(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to min; returning Inf</code></pre>
+<pre><code>## Warning in min(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to min; returning Inf
+
+## Warning in min(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to min; returning Inf
+
+## Warning in min(Upper.Confidence.Interval, na.rm = T): no non-missing arguments
+## to min; returning Inf</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;Country&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 161 x 3
+## # Groups:   Country [161]
+##    Country     Region                     `min(Upper.Confidence.Interval, na.rm…
+##    &lt;fct&gt;       &lt;fct&gt;                                                       &lt;dbl&gt;
+##  1 Afghanistan Southern Asia                                                3.43
+##  2 Albania     Central and Eastern Europe                                   4.76
+##  3 Algeria     Middle East and Northern …                                   6.48
+##  4 Angola      Sub-Saharan Africa                                           3.98
+##  5 Argentina   Latin America and Caribbe…                                   6.74
+##  6 Armenia     Central and Eastern Europe                                   4.45
+##  7 Australia   Australia and New Zealand                                    7.38
+##  8 Austria     Western Europe                                               7.19
+##  9 Azerbaijan  Central and Eastern Europe                                   5.36
+## 10 Bahrain     Middle East and Northern …                                   6.31
+## # … with 151 more rows</code></pre>
+<pre class="r"><code>WHR.HAC1 %&gt;% summarize(mean(Economy..GDP.per.Capita., na.rm=T)) </code></pre>
+<pre><code>##   mean(Economy..GDP.per.Capita., na.rm = T)
+## 1                                 0.9538798</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(sd(Economy..GDP.per.Capita., na.rm=T))</code></pre>
+<pre><code>##   sd(Economy..GDP.per.Capita., na.rm = T)
+## 1                               0.4125954</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(min(Economy..GDP.per.Capita., na.rm=T))</code></pre>
+<pre><code>##   min(Economy..GDP.per.Capita., na.rm = T)
+## 1                                        0</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(max(Economy..GDP.per.Capita., na.rm=T))</code></pre>
+<pre><code>##   max(Economy..GDP.per.Capita., na.rm = T)
+## 1                                  1.82427</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(var(Economy..GDP.per.Capita., na.rm=T))</code></pre>
+<pre><code>##   var(Economy..GDP.per.Capita., na.rm = T)
+## 1                                 0.170235</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(mean(Family, na.rm=T))</code></pre>
+<pre><code>##   mean(Family, na.rm = T)
+## 1               0.7936211</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(mean(Health..Life.Expectancy., na.rm=T))</code></pre>
+<pre><code>##   mean(Health..Life.Expectancy., na.rm = T)
+## 1                                  0.557619</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(sd(Health..Life.Expectancy., na.rm=T))</code></pre>
+<pre><code>##   sd(Health..Life.Expectancy., na.rm = T)
+## 1                               0.2293492</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(min(Health..Life.Expectancy., na.rm=T))</code></pre>
+<pre><code>##   min(Health..Life.Expectancy., na.rm = T)
+## 1                                        0</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(max(Health..Life.Expectancy., na.rm=T))</code></pre>
+<pre><code>##   max(Health..Life.Expectancy., na.rm = T)
+## 1                                  0.95277</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(mean(Family, na.rm=T))</code></pre>
+<pre><code>##   mean(Family, na.rm = T)
+## 1               0.7936211</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(mean(Health..Life.Expectancy., na.rm=T))</code></pre>
+<pre><code>##   mean(Health..Life.Expectancy., na.rm = T)
+## 1                                  0.557619</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(sd(Health..Life.Expectancy., na.rm=T))</code></pre>
+<pre><code>##   sd(Health..Life.Expectancy., na.rm = T)
+## 1                               0.2293492</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(min(Health..Life.Expectancy., na.rm=T))</code></pre>
+<pre><code>##   min(Health..Life.Expectancy., na.rm = T)
+## 1                                        0</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(max(Health..Life.Expectancy., na.rm=T))</code></pre>
+<pre><code>##   max(Health..Life.Expectancy., na.rm = T)
+## 1                                  0.95277</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(var(Freedom, na.rm=T))</code></pre>
+<pre><code>##   var(Freedom, na.rm = T)
+## 1              0.02117222</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(sd(Trust..Government.Corruption., na.rm=T))</code></pre>
+<pre><code>##   sd(Trust..Government.Corruption., na.rm = T)
+## 1                                    0.1110379</code></pre>
+<pre class="r"><code>WHR.HAC1%&gt;% summarize(max(Health..Life.Expectancy., na.rm=T))</code></pre>
+<pre><code>##   max(Health..Life.Expectancy., na.rm = T)
+## 1                                  0.95277</code></pre>
+</div>
+<div id="a-new-column-was-made-by-categorizing-the-life-expectancies-as-highmedium-orlow.-high-was-a-life-expectancy-0.75-or-higher-and-low-was-0.25-and-below.-this-was-done-by-mutating-the-data.next-i-wanted-to-obtain-summary-statistics-for-different-variables-in-the-dataset.-i-used-a-variety-of-statistics-including-mean-standard-deviation-minimum-maximum-and-variance.-the-variables-i-explored-were-happiness-scoresconfidence-intervals-family-statistics-gdp-life-expectancy-freedom-and-trust.-for-a-few-of-them-i-grouped-by-country-and-region.-i-was-surprised-to-see-that-the-minimum-happiness-score-was.-2.905-out-of-10.-that-seemed-really-low-to-me-but-the-max-was-only-7.526.-another-interesting-statistic-was-that-the-mean-life-expectancy-was-0.557619." class="section level1">
+<h1>A new column was made by categorizing the life expectancies as “high,”medium“, or”low". High was a life expectancy 0.75 or higher, and low was 0.25 and below. This was done by mutating the data.Next, I wanted to obtain summary statistics for different variables in the dataset. I used a variety of statistics, including mean, standard deviation, minimum, maximum, and variance. The variables I explored were Happiness Scores,Confidence intervals, Family statistics, GDP, Life Expectancy, Freedom, and Trust. For a few of them, I grouped by Country and Region. I was surprised to see that the minimum happiness score was. 2.905 out of 10. That seemed really low to me, but the max was only 7.526. Another interesting statistic was that the mean Life expectancy was 0.557619.</h1>
+<pre class="r"><code>library(tidyverse)
+library(maps) #install.packages(&quot;maps&quot;) if not on the servers</code></pre>
+<pre><code>## 
+## Attaching package: &#39;maps&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     map</code></pre>
+<pre class="r"><code>world &lt;- map_data(&quot;world&quot;)
+ggplot(WHR.HAC1)+geom_point(aes(Happiness.Score,Spirit_PerCapita,color=Country))+
+  geom_polygon(aes(long, lat, group=group), data = world, fill = &quot;red&quot;) + xlim(150,200)+ylim(-50,0) + 
+  ggtitle(&quot;Heat Map of Happiness and Alcohol Consumption across Countries&quot;) +
+  theme(plot.title = element_text(size = rel(1.5)))</code></pre>
+<pre><code>## Warning: Removed 161 rows containing missing values (geom_point).</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div id="this-plot-a-heat-map-is-used-to-show-what-areas-of-the-world-had-the-highest-and-lowest-happiness-scores-and-alcohol-spirit-consumption-per-capita.-in-areas-where-there-are-darker-colors-it-shows-the-countries-that-have-the-highest-levels-of-scores.-denmark-has-the-highest-happiness-score-and-scandinavian-countries-in-general-seem-to-be-higher-on-the-scale." class="section level2">
+<h2>This plot, a heat map, is used to show what areas of the world had the highest and lowest happiness scores and alcohol (spirit) consumption per capita. In areas where there are darker colors, it shows the countries that have the highest levels of scores. Denmark has the highest happiness score, and Scandinavian countries in general seem to be higher on the scale.</h2>
+<pre class="r"><code>ggplot(WHR.HAC1, aes(Family))+  
+  geom_bar(aes(y=Happiness.Score,fill=Country),            
+           stat=&quot;summary&quot;, fun=mean) +
+    theme(axis.text.x = element_text(angle=45, hjust=1),
+          legend.position=&quot;none&quot;) +
+  ggtitle(&quot;Family Values and Happiness Scores&quot;) </code></pre>
+<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_summary).</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+#In this plot, Family data was compared with Happiness Score by country. Each country is a different color, and the bars repreesnt how high the happines score was with correlation to family score. The plot ended up showing that there were only three countries with a family score that also resulted in a higher Happiness Score. The family scores were all around the 0.8 range. The Happiness scores ranged from 4 to 6, but the higher the happiness score, the lower the family score.</p>
+<pre class="r"><code>library(ggplot2)
+ggplot(data = WHR.HAC1, aes(x = GDP_PerCapita, y = Health..Life.Expectancy.)) +
+  geom_point(size=2, color = WHR.HAC1$Happiness.Rank) +
+  geom_step(aes(y=Health..Life.Expectancy.), stat=&quot;summary&quot;, fun=mean) +
+   ggtitle(&quot;GDP and Life Expectancy&quot;) +
+  xlab(&quot;GDP Per Capita&quot;) + ylab(&quot;Life Expectancy&quot;) +
+  theme(plot.title = element_text(size = rel(2)))</code></pre>
+<pre><code>## Warning: Removed 43 rows containing non-finite values (stat_summary).</code></pre>
+<pre><code>## Warning: Removed 43 rows containing missing values (geom_point).</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+</div>
+<div id="this-plot-contains-data-from-life-expectancy-in-countries-compared-with-gdp-per-capita.-when-gdp-per-capita-is-around-100-the-life-expectancy-seems-to-be-at-its-highest.-the-colors-all-represent-happiness-rank-as-well.-when-gdp-is-close-to-0-life-expectancy-is-also-very-low.-the-trend-that-surprised-me-the-most-was-how-different-each-country-was-in-happiness-level-and-life-expectancy.-after-a-gdp-of-250.-after-the-250-mark-the-life-expectancy-significantly-drops." class="section level1">
+<h1>This plot contains data from Life Expectancy in countries compared with GDP per capita. When GDP per capita is around 100, the life expectancy seems to be at it’s highest. The colors all represent happiness rank, as well. When GDP is close to 0, life expectancy is also very low. The trend that surprised me the most was how different each country was in happiness level and life expectancy. after a GDP of 250. After the 250 mark, the life expectancy significantly drops.</h1>
+<pre class="r"><code>library(cluster)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;cluster&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:maps&#39;:
+## 
+##     votes.repub</code></pre>
+<pre class="r"><code>pam1&lt;- WHR.HAC1 %&gt;% select(-Country, -Region, -Happiness.Rank, -Lower.Confidence.Interval, -Upper.Confidence.Interval, -Hemisphere, -HDI, -Beer_PerCapita, -Spirit_PerCapita, -Wine_PerCapita, -lifeexp_cat) %&gt;% scale %&gt;% pam(3)
+pam1</code></pre>
+<pre><code>## Medoids:
+##       ID Happiness.Score Economy..GDP.per.Capita.    Family
+## [1,] 158       0.4330654                       NA        NA
+## [2,] 159      -0.9555666                       NA        NA
+## [3,] 151      -1.5385465                -1.768633 -1.809939
+##      Health..Life.Expectancy.    Freedom Trust..Government.Corruption.
+## [1,]                       NA         NA                            NA
+## [2,]                       NA         NA                            NA
+## [3,]                -1.610335 -0.4224126                    -0.1659231
+##      Generosity Dystopia.Residual GDP_PerCapita
+## [1,]         NA                NA    -0.3947700
+## [2,]         NA                NA    -0.4283423
+## [3,]    0.42245        -0.3130954            NA
+## Clustering vector:
+##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3
+## [112] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 2 2 3 2 2 3 3 2 3 2 2 2 3 2 3 3 2 2 3
+## [149] 3 3 3 2 3 3 3 2 3 1 2 3 2
+## Objective function:
+##    build     swap 
+## 1.206146 1.171396 
+## 
+## Available components:
+##  [1] &quot;medoids&quot;    &quot;id.med&quot;     &quot;clustering&quot; &quot;objective&quot;  &quot;isolation&quot; 
+##  [6] &quot;clusinfo&quot;   &quot;silinfo&quot;    &quot;diss&quot;       &quot;call&quot;       &quot;data&quot;</code></pre>
+<pre class="r"><code>pam1$silinfo$avg.width</code></pre>
+<pre><code>## [1] 0.2119253</code></pre>
+<pre class="r"><code>plot(pam1,which=2)</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>pam_dat&lt;-WHR.HAC1%&gt;%select(Happiness.Score, Economy..GDP.per.Capita.,Health..Life.Expectancy.) 
+sil_width&lt;-vector()
+for(i in 2:10){
+pam_fit &lt;- pam(pam_dat, k = i)
+sil_width[i] &lt;- pam_fit$silinfo$avg.width 
+}
+ggplot()+geom_line(aes(x=1,y=sil_width))+scale_x_continuous(name=&quot;k&quot;,breaks=1)</code></pre>
+<pre><code>## Warning: Removed 1 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<pre class="r"><code>glimpse(pam_fit)</code></pre>
+<pre><code>## List of 10
+##  $ medoids   : num [1:10, 1:3] 7.31 6.6 6.36 5.86 5.53 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : NULL
+##   .. ..$ : chr [1:3] &quot;Happiness.Score&quot; &quot;Economy..GDP.per.Capita.&quot; &quot;Health..Life.Expectancy.&quot;
+##  $ id.med    : int [1:10] 9 27 38 158 71 86 102 159 161 152
+##  $ clustering: int [1:161] 1 1 1 1 1 1 1 1 1 1 ...
+##  $ objective : Named num [1:2] 0.229 0.209
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;build&quot; &quot;swap&quot;
+##  $ isolation : Factor w/ 3 levels &quot;no&quot;,&quot;L&quot;,&quot;L*&quot;: 1 1 1 1 1 1 1 1 1 1
+##   ..- attr(*, &quot;names&quot;)= chr [1:10] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+##  $ clusinfo  : num [1:10, 1:5] 16 20 10 20 12 21 15 23 11 13 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : NULL
+##   .. ..$ : chr [1:5] &quot;size&quot; &quot;max_diss&quot; &quot;av_diss&quot; &quot;diameter&quot; ...
+##  $ silinfo   :List of 3
+##   ..$ widths         : num [1:161, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
+##   .. ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   ..$ clus.avg.widths: num [1:10] 0.6086 0.1947 0.2988 0.0532 0.3724 ...
+##   ..$ avg.width      : num 0.278
+##  $ diss      : NULL
+##  $ call      : language pam(x = pam_dat, k = i)
+##  $ data      : num [1:161, 1:3] 7.53 7.51 7.5 7.5 7.41 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : NULL
+##   .. ..$ : chr [1:3] &quot;Happiness.Score&quot; &quot;Economy..GDP.per.Capita.&quot; &quot;Health..Life.Expectancy.&quot;
+##  - attr(*, &quot;class&quot;)= chr [1:2] &quot;pam&quot; &quot;partition&quot;</code></pre>
+<pre class="r"><code>library(plotly)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
+<pre class="r"><code>pam_dat%&gt;%plot_ly(x= ~Economy..GDP.per.Capita., y = ~Health..Life.Expectancy., z = ~Happiness.Score, color= ~Economy..GDP.per.Capita.,
+type = &quot;scatter3d&quot;, mode = &quot;markers&quot;) %&gt;% layout(autosize = F, width = 900, height = 400)</code></pre>
+<pre><code>## Warning: Specifying width/height in layout() is now deprecated.
+## Please specify in ggplotly() or plot_ly()</code></pre>
+<pre><code>## Warning: Ignoring 4 observations</code></pre>
+<pre><code>## Warning: `arrange_()` is deprecated as of dplyr 0.7.0.
+## Please use `arrange()` instead.
+## See vignette(&#39;programming&#39;) for more help
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"visdat":{"1081c4273ae56":["function () ","plotlyVisDat"]},"cur_data":"1081c4273ae56","attrs":{"1081c4273ae56":{"x":{},"y":{},"z":{},"mode":"markers","color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d"}},"layout":{"width":900,"height":400,"margin":{"b":40,"l":60,"t":25,"r":10},"autosize":false,"scene":{"xaxis":{"title":"Economy..GDP.per.Capita."},"yaxis":{"title":"Health..Life.Expectancy."},"zaxis":{"title":"Happiness.Score"}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[1.44178,1.52733,1.42666,1.57744,1.40598,1.44015,1.46468,1.36066,1.44443,1.45181,1.33766,1.45038,1.50796,1.06879,1.35943,1.44787,1.08754,1.42539,1.48341,1.69752,1.11508,1.64555,1.40283,1.2167,1.18306,1.15137,1.30915,1.57352,1.18157,1.30782,1.03032,1.39488,1.0893,1.48953,1.39729,1.82427,1.34253,1.05266,0.83454,1.09686,1.61714,1.44024,1.32572,1.13367,1.27973,0.8737,1.25142,0.69384,0.73591,1.35495,0.97306,0.87616,1.38007,1.22943,0.69177,1.23228,1.24585,1.35948,0.79422,1.2692,1.13062,1.31141,1.29947,0.99602,1.08017,1.14372,1.06688,1.21788,1.31857,0.89373,1.1697,1.27964,0.89333,1.18649,1.5107,0,0.90145,1.16492,0.95104,0.99673,1.12373,0.81217,1.0278,0.8527,0.56044,1.03437,0.93383,1.07838,1.02787,0.84058,1.24142,0.68816,1.12268,1.27607,1.0193,0.74037,0.25558,0.97724,1.24886,0.48835,0.98853,0.68042,0.75216,0.69429,1.11758,0.61202,0.44626,0.67024,0.9553,0.54177,0.36485,1.07474,0.93287,0.52497,0.29283,1.02416,0.97318,0.74036,0.34112,0.95395,0.86086,0.52267,0.87287,0.63107,0.05661,0.83792,0.77109,0.44314,1.11306,0.61391,0.35041,0.08709,0.63069,1.15851,0.31292,0.34097,1.09426,0.27509,0.55507,0.55604,0.84731,0.1327,0.39394,0.42214,0.31995,0.34719,0.57939,0.27954,0.47155,0.10706,0.22415,0.32846,0.39499,0.38227,0.28123,0.74719,0.06831],"y":[0.79504,0.86303,0.86733,0.79579,0.81091,0.8276,0.81231,0.83096,0.8512,0.83121,0.84917,0.80565,0.779,0.76146,0.77758,0.81487,0.61415,0.81959,0.81455,0.84542,0.71143,0.94719,0.80991,0.81883,0.70835,0.69711,0.76376,0.72993,0.72183,0.80315,0.59659,0.83795,0.64915,0.59267,0.79565,0.71723,0.87896,0.61804,0.54039,0.50933,0.63569,0.65696,0.52608,0.61904,0.70367,0.596,0.62366,0.65213,0.50163,0.85102,0.68613,0.45569,0.91491,0.57386,0.52309,0.58991,0.69058,0.88645,0.4697,0.64674,0.63104,0.84142,0.79151,0.62994,0.44006,0.66189,0.52304,0.63952,0.8488,0.58295,0.67602,0.68098,0.59469,0.70524,0.95277,0.11466,0.54,0.64718,0.49374,0.60712,0.54504,0.47036,0.73561,0.49759,0.55449,0.6458,0.70766,0.63533,0.57669,0.59471,0.67608,0.40306,0.76171,0.79363,0.64738,0.66157,0.33108,0.59577,0.80029,0.53119,0.55469,0.38291,0.05108,0.58383,0.64232,0.23573,0.50073,0.56844,0.73007,0.52989,0,0.51076,0.34745,0.12698,0.34578,0.18611,0.62007,0.45091,0.3988,0.52116,0.64083,0.30147,0.58628,0.29681,0.188,0.64035,0.28212,0.40457,0.67806,0.28639,0.1595,0.29364,0.29759,0.3494,0.16347,0.27494,0.34752,0.29981,0.04476,0.42494,0.04991,0.26162,0.15781,0.03824,0.21297,0.19625,0.31048,0.37109,0.357,0.23165,0.18829,0.31865,0.21028,0.17344,0.24811,0.62994,0.15747],"z":[7.526,7.509,7.501,7.498,7.413,7.404,7.339,7.334,7.313,7.291,7.267,7.119,7.104,7.087,7.039,6.994,6.952,6.929,6.907,6.871,6.778,6.739,6.725,6.705,6.701,6.65,6.596,6.573,6.545,6.488,6.481,6.478,6.474,6.379,6.379,6.375,6.361,6.355,6.324,6.269,6.239,6.218,6.168,6.084,6.078,6.068,6.005,5.992,5.987,5.977,5.976,5.956,5.921,5.919,5.897,5.856,5.835,5.835,5.822,5.813,5.802,5.771,5.768,5.743,5.658,5.648,5.615,5.56,5.546,5.538,5.528,5.517,5.51,5.488,5.458,5.44,5.401,5.389,5.314,5.303,5.291,5.279,5.245,5.196,5.185,5.177,5.163,5.161,5.155,5.151,5.145,5.132,5.129,5.123,5.121,5.061,5.057,5.045,5.033,4.996,4.907,4.876,4.875,4.871,4.813,4.795,4.793,4.754,4.655,4.643,4.635,4.575,4.574,4.513,4.508,4.459,4.415,4.404,4.395,4.362,4.36,4.356,4.324,4.276,4.272,4.252,4.236,4.219,4.217,4.201,4.193,4.156,4.139,4.121,4.073,4.028,3.974,3.956,3.916,3.907,3.866,3.856,3.832,3.763,3.739,3.739,3.724,3.695,3.666,3.622,3.607,3.515,3.484,3.36,3.303,3.069,2.905],"mode":"markers","type":"scatter3d","marker":{"colorbar":{"title":"Economy..GDP.per.Capita.","ticklen":2},"cmin":0,"cmax":1.82427,"colorscale":[["0","rgba(68,1,84,1)"],["0.0416666666666667","rgba(70,19,97,1)"],["0.0833333333333333","rgba(72,32,111,1)"],["0.125","rgba(71,45,122,1)"],["0.166666666666667","rgba(68,58,128,1)"],["0.208333333333333","rgba(64,70,135,1)"],["0.25","rgba(60,82,138,1)"],["0.291666666666667","rgba(56,93,140,1)"],["0.333333333333333","rgba(49,104,142,1)"],["0.375","rgba(46,114,142,1)"],["0.416666666666667","rgba(42,123,142,1)"],["0.458333333333333","rgba(38,133,141,1)"],["0.5","rgba(37,144,140,1)"],["0.541666666666667","rgba(33,154,138,1)"],["0.583333333333333","rgba(39,164,133,1)"],["0.625","rgba(47,174,127,1)"],["0.666666666666667","rgba(53,183,121,1)"],["0.708333333333333","rgba(79,191,110,1)"],["0.75","rgba(98,199,98,1)"],["0.791666666666667","rgba(119,207,85,1)"],["0.833333333333333","rgba(147,214,70,1)"],["0.875","rgba(172,220,52,1)"],["0.916666666666667","rgba(199,225,42,1)"],["0.958333333333333","rgba(226,228,40,1)"],["1","rgba(253,231,37,1)"]],"showscale":false,"color":[1.44178,1.52733,1.42666,1.57744,1.40598,1.44015,1.46468,1.36066,1.44443,1.45181,1.33766,1.45038,1.50796,1.06879,1.35943,1.44787,1.08754,1.42539,1.48341,1.69752,1.11508,1.64555,1.40283,1.2167,1.18306,1.15137,1.30915,1.57352,1.18157,1.30782,1.03032,1.39488,1.0893,1.48953,1.39729,1.82427,1.34253,1.05266,0.83454,1.09686,1.61714,1.44024,1.32572,1.13367,1.27973,0.8737,1.25142,0.69384,0.73591,1.35495,0.97306,0.87616,1.38007,1.22943,0.69177,1.23228,1.24585,1.35948,0.79422,1.2692,1.13062,1.31141,1.29947,0.99602,1.08017,1.14372,1.06688,1.21788,1.31857,0.89373,1.1697,1.27964,0.89333,1.18649,1.5107,0,0.90145,1.16492,0.95104,0.99673,1.12373,0.81217,1.0278,0.8527,0.56044,1.03437,0.93383,1.07838,1.02787,0.84058,1.24142,0.68816,1.12268,1.27607,1.0193,0.74037,0.25558,0.97724,1.24886,0.48835,0.98853,0.68042,0.75216,0.69429,1.11758,0.61202,0.44626,0.67024,0.9553,0.54177,0.36485,1.07474,0.93287,0.52497,0.29283,1.02416,0.97318,0.74036,0.34112,0.95395,0.86086,0.52267,0.87287,0.63107,0.05661,0.83792,0.77109,0.44314,1.11306,0.61391,0.35041,0.08709,0.63069,1.15851,0.31292,0.34097,1.09426,0.27509,0.55507,0.55604,0.84731,0.1327,0.39394,0.42214,0.31995,0.34719,0.57939,0.27954,0.47155,0.10706,0.22415,0.32846,0.39499,0.38227,0.28123,0.74719,0.06831],"line":{"colorbar":{"title":"","ticklen":2},"cmin":0,"cmax":1.82427,"colorscale":[["0","rgba(68,1,84,1)"],["0.0416666666666667","rgba(70,19,97,1)"],["0.0833333333333333","rgba(72,32,111,1)"],["0.125","rgba(71,45,122,1)"],["0.166666666666667","rgba(68,58,128,1)"],["0.208333333333333","rgba(64,70,135,1)"],["0.25","rgba(60,82,138,1)"],["0.291666666666667","rgba(56,93,140,1)"],["0.333333333333333","rgba(49,104,142,1)"],["0.375","rgba(46,114,142,1)"],["0.416666666666667","rgba(42,123,142,1)"],["0.458333333333333","rgba(38,133,141,1)"],["0.5","rgba(37,144,140,1)"],["0.541666666666667","rgba(33,154,138,1)"],["0.583333333333333","rgba(39,164,133,1)"],["0.625","rgba(47,174,127,1)"],["0.666666666666667","rgba(53,183,121,1)"],["0.708333333333333","rgba(79,191,110,1)"],["0.75","rgba(98,199,98,1)"],["0.791666666666667","rgba(119,207,85,1)"],["0.833333333333333","rgba(147,214,70,1)"],["0.875","rgba(172,220,52,1)"],["0.916666666666667","rgba(199,225,42,1)"],["0.958333333333333","rgba(226,228,40,1)"],["1","rgba(253,231,37,1)"]],"showscale":false,"color":[1.44178,1.52733,1.42666,1.57744,1.40598,1.44015,1.46468,1.36066,1.44443,1.45181,1.33766,1.45038,1.50796,1.06879,1.35943,1.44787,1.08754,1.42539,1.48341,1.69752,1.11508,1.64555,1.40283,1.2167,1.18306,1.15137,1.30915,1.57352,1.18157,1.30782,1.03032,1.39488,1.0893,1.48953,1.39729,1.82427,1.34253,1.05266,0.83454,1.09686,1.61714,1.44024,1.32572,1.13367,1.27973,0.8737,1.25142,0.69384,0.73591,1.35495,0.97306,0.87616,1.38007,1.22943,0.69177,1.23228,1.24585,1.35948,0.79422,1.2692,1.13062,1.31141,1.29947,0.99602,1.08017,1.14372,1.06688,1.21788,1.31857,0.89373,1.1697,1.27964,0.89333,1.18649,1.5107,0,0.90145,1.16492,0.95104,0.99673,1.12373,0.81217,1.0278,0.8527,0.56044,1.03437,0.93383,1.07838,1.02787,0.84058,1.24142,0.68816,1.12268,1.27607,1.0193,0.74037,0.25558,0.97724,1.24886,0.48835,0.98853,0.68042,0.75216,0.69429,1.11758,0.61202,0.44626,0.67024,0.9553,0.54177,0.36485,1.07474,0.93287,0.52497,0.29283,1.02416,0.97318,0.74036,0.34112,0.95395,0.86086,0.52267,0.87287,0.63107,0.05661,0.83792,0.77109,0.44314,1.11306,0.61391,0.35041,0.08709,0.63069,1.15851,0.31292,0.34097,1.09426,0.27509,0.55507,0.55604,0.84731,0.1327,0.39394,0.42214,0.31995,0.34719,0.57939,0.27954,0.47155,0.10706,0.22415,0.32846,0.39499,0.38227,0.28123,0.74719,0.06831]}},"frame":null},{"x":[0,1.82427],"y":[0,0.95277],"type":"scatter3d","mode":"markers","opacity":0,"hoverinfo":"none","showlegend":false,"marker":{"colorbar":{"title":"Economy..GDP.per.Capita.","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"cmin":0,"cmax":1.82427,"colorscale":[["0","rgba(68,1,84,1)"],["0.0416666666666667","rgba(70,19,97,1)"],["0.0833333333333333","rgba(72,32,111,1)"],["0.125","rgba(71,45,122,1)"],["0.166666666666667","rgba(68,58,128,1)"],["0.208333333333333","rgba(64,70,135,1)"],["0.25","rgba(60,82,138,1)"],["0.291666666666667","rgba(56,93,140,1)"],["0.333333333333333","rgba(49,104,142,1)"],["0.375","rgba(46,114,142,1)"],["0.416666666666667","rgba(42,123,142,1)"],["0.458333333333333","rgba(38,133,141,1)"],["0.5","rgba(37,144,140,1)"],["0.541666666666667","rgba(33,154,138,1)"],["0.583333333333333","rgba(39,164,133,1)"],["0.625","rgba(47,174,127,1)"],["0.666666666666667","rgba(53,183,121,1)"],["0.708333333333333","rgba(79,191,110,1)"],["0.75","rgba(98,199,98,1)"],["0.791666666666667","rgba(119,207,85,1)"],["0.833333333333333","rgba(147,214,70,1)"],["0.875","rgba(172,220,52,1)"],["0.916666666666667","rgba(199,225,42,1)"],["0.958333333333333","rgba(226,228,40,1)"],["1","rgba(253,231,37,1)"]],"showscale":true,"color":[0,1.82427],"line":{"color":"rgba(255,127,14,1)"}},"z":[2.905,7.526],"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>plot(pam1, which=2)</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-9-4.png" width="672" /></p>
+</div>
+<div id="to-begin-i-made-sure-my-data-from-above-was-tidy-and-set-up-correctly.-i-selected-only-the-numeric-variables-and-then-scaled-the-data.-the-variables-i-chose-were-happiness.score-gdp-per-capita-and-life-expectancy.-the-average-width-of-the-silhouette-was-0.2119253.-i-chose-to-use-three-clusters-at-this-point-because-these-clusters-accounted-for-0.67-of-the-data.-the-silhouette-plot-shows-that-the-structure-is-reasonable.-the-clusters-are-by-groups-of-gdp-where-some-countries-are-higher-and-some-are-lower.-the-goodness-of-fit-is-not-very-good.-it-is-0.21-so-that-is-very-low-and-probably-not-a-good-fit-for-this-dataset." class="section level1">
+<h1>To begin, I made sure my data from above was tidy and set up correctly. I selected only the numeric variables and then scaled the data. The variables I chose were Happiness.Score, GDP per Capita, and Life Expectancy. The average width of the silhouette was 0.2119253. I chose to use three clusters at this point because these clusters accounted for 0.67 of the data. The silhouette plot shows that the structure is “reasonable”. The clusters are by groups of GDP, where some countries are higher and some are lower. The goodness of fit is not very good. It is 0.21, so that is very low and probably not a good fit for this dataset.</h1>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+</div>
+
+            
+        <hr>         <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div> 
+            </div>
+          </div>
+
+   <hr>  <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div> 
+        </div>
+      </div>
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="../../js/docs.min.js"></script>
+<script src="../../js/main.js"></script>
+
+<script src="../../js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>

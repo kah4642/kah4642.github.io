@@ -1,0 +1,208 @@
+---
+title: "Project1"
+author: "Kirsten Hilling"
+date: "3/30/2021"
+output: html_document
+---
+
+```{r eval=F}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = F, message = F,
+tidy=TRUE, tidy.opts=list(width.cutoff=60), R.options=list(max.print=100))
+```
+
+## In this project, I am going to be using the World Happiness Report data from 2016 and a Happiness and Alcohol Consumption dataset from 2016. The first data set contains the rankings and scores from the World Happiness Report which measures the average happiness in each country based on several factors. This report's data also includes GDP per capita, Life Expectancy, and Government Trust factors. The second dataset looks at alcohol consumption (Beer, Wine, and Spirits)  in each country. 
+
+# I learned about the World Happiness Report in one of my other classes, Society, Health and Happiness. I was interested to see the factors that go into each country's happiness and I pulled this data into R. I then began searching for other datasets looking at different countries' happiness. I found a dataset about Alcohol Consumption on a public data site and downloaded it. When I merge the data together, I am expecting to see correlations between higher GDP levels and higher happiness scores. I also am curious to see if there are any correlations between happiness, alcohol, and a combination of the other factors included in the World Happiness Report.
+
+
+
+```{r}
+library(tidyverse)
+WHR <- read.csv("~/2016.csv")
+HAC <- read.csv("~/HappinessAlcoholConsumption.csv")
+
+glimpse(WHR)
+glimpse(HAC)
+
+
+```
+
+#I uploaded two files, one from the World Happiness Report based on country and one based on Happiness and Alcohol Consumption by country. Both are from 2016.
+
+
+
+```{r}
+WHR.HAC <- WHR %>% full_join(HAC, by=c("Happiness.Score"="HappinessScore", "Region", "Country"))
+glimpse(WHR.HAC) #161 rows
+
+glimpse(WHR) #157 rows
+glimpse(HAC) #122 rows
+
+sum(HAC$Country %in% WHR$Country)
+setdiff(HAC$Country, WHR$Country)
+
+122-118
+
+glimpse(WHR.HAC)
+
+
+Pivot<- WHR.HAC %>% pivot_longer(cols=c("Beer_PerCapita","Wine_PerCapita"), names_to="TypeofAlc", values_to="BeerWine_PerCapita")
+glimpse(Pivot)
+Pivot1 <- Pivot %>% pivot_wider(names_from="TypeofAlc", values_from="BeerWine_PerCapita")
+glimpse(Pivot1)
+
+```
+#I decided to full join these datasets based off of Happiness Score. Both datasets have similar variables, including Happiness Score and Country.I wanted to full join to retain all of the data from both datasets, but add the other data from the Happiness and Alcohol Consumption dataset to the World Happiness Report data.
+# To do this, I joined both datasets based off of Happiness Score, Region, and Country. I was able to pipe the "WHR" dataset into the "HAC" dataset through the "full_join" function. 
+# The only adjustment I had to make to make sure the columns aligned was to specify that "Happiness.Score" and "HappinessScore" in the WHR and HAC datasets respectively were the same variable.
+# After the join, I was able to compare whether or not rows were dropped.There were originally 157 rows in the "WHR" dataset and 122 rows in the "HAC" dataset. In the joined dataset, there were 161 rows. Using the "sum" and %in% functions, I was able to find that 118 rows from "HAC" were matched in "WHR". Overall, 4 rows were dropped. The "setdiff" function allowed me to figure out that "Russian Federation", "Dem. Rep. Congo", "Rep. Congo", and "Cote d'Ivoire" were the observations dropped. I also rearranged the tables using pivot longer and wider. Beer and Wine per capita were combined to one alcohol column and the values were in one column. I then created the two columns once again.
+
+  
+```{r}
+
+library(tidyverse)
+Ex1 <- WHR.HAC %>% filter(Happiness.Score>=7 & Spirit_PerCapita >80) %>% arrange(desc(Happiness.Score), desc(Spirit_PerCapita))
+
+Ex2 <- WHR.HAC %>% select(Country, Happiness.Rank, Happiness.Score, Liquor_PerCapita=Spirit_PerCapita, everything()) 
+```
+
+#Next, I filtered the joined dataeset by calling only countries that had Happiness Scores greater than or equal to 7. and Spirit per Capity greater than 80. I wanted to see which countries had a high happiness score, but also consumed a relatively large amount of alcohol. There were 19 countries, and Denmark came in first place for higher Happiness rank in 2016. Denmark's Spirit per Capita was 81. The second country, Switzerland, had a 100 Spirit per Capita, which is interesting to see that their happiness levels are still so high.
+
+
+```{r}
+
+WHR.HAC1 <-  WHR.HAC%>%mutate(lifeexp_cat = case_when(Health..Life.Expectancy.>0.75 ~ "high",
+Health..Life.Expectancy.<=0.75 & 0.25<=Health..Life.Expectancy. ~ "med",
+Health..Life.Expectancy.<0.25 ~ "low"))
+glimpse(WHR.HAC1)
+
+WHR.HAC1%>% summarize(sd(Happiness.Score, na.rm=T))
+WHR.HAC1%>% summarize(min(Happiness.Score, na.rm=T))
+WHR.HAC1%>% summarize(max(Happiness.Score, na.rm=T))
+
+WHR.HAC1%>% group_by(Country) %>% summarize(sd(Happiness.Score, na.rm=T))
+WHR.HAC1%>% group_by(Country) %>% summarize(min(Happiness.Score, na.rm=T))
+WHR.HAC1%>% group_by(Country) %>% summarize(max(Happiness.Score, na.rm=T))
+
+WHR.HAC1%>% summarize(sd(Lower.Confidence.Interval, na.rm=T))
+WHR.HAC1%>% summarize(min(Upper.Confidence.Interval, na.rm=T))
+WHR.HAC1%>% summarize(max(Upper.Confidence.Interval, na.rm=T))
+WHR.HAC1%>% summarize(sd(Lower.Confidence.Interval, na.rm=T))
+WHR.HAC1%>% summarize(min(Upper.Confidence.Interval, na.rm=T))
+
+WHR.HAC1%>% group_by(Country, Region) %>% summarize(sd(Lower.Confidence.Interval, na.rm=T))
+WHR.HAC1%>% group_by(Country, Region) %>% summarize(min(Upper.Confidence.Interval, na.rm=T))
+WHR.HAC1%>% group_by(Country, Region) %>% summarize(max(Upper.Confidence.Interval, na.rm=T)) 
+WHR.HAC1%>% group_by(Country, Region) %>% summarize(sd(Lower.Confidence.Interval, na.rm=T))
+WHR.HAC1%>% group_by(Country, Region) %>% summarize(min(Upper.Confidence.Interval, na.rm=T))
+
+
+WHR.HAC1 %>% summarize(mean(Economy..GDP.per.Capita., na.rm=T)) 
+WHR.HAC1%>% summarize(sd(Economy..GDP.per.Capita., na.rm=T))
+WHR.HAC1%>% summarize(min(Economy..GDP.per.Capita., na.rm=T))
+WHR.HAC1%>% summarize(max(Economy..GDP.per.Capita., na.rm=T))
+WHR.HAC1%>% summarize(var(Economy..GDP.per.Capita., na.rm=T))
+
+WHR.HAC1%>% summarize(mean(Family, na.rm=T))
+WHR.HAC1%>% summarize(mean(Health..Life.Expectancy., na.rm=T))
+WHR.HAC1%>% summarize(sd(Health..Life.Expectancy., na.rm=T))
+WHR.HAC1%>% summarize(min(Health..Life.Expectancy., na.rm=T))
+WHR.HAC1%>% summarize(max(Health..Life.Expectancy., na.rm=T))
+
+WHR.HAC1%>% summarize(mean(Family, na.rm=T))
+WHR.HAC1%>% summarize(mean(Health..Life.Expectancy., na.rm=T))
+WHR.HAC1%>% summarize(sd(Health..Life.Expectancy., na.rm=T))
+WHR.HAC1%>% summarize(min(Health..Life.Expectancy., na.rm=T))
+WHR.HAC1%>% summarize(max(Health..Life.Expectancy., na.rm=T))
+WHR.HAC1%>% summarize(var(Freedom, na.rm=T))
+
+WHR.HAC1%>% summarize(sd(Trust..Government.Corruption., na.rm=T))
+
+WHR.HAC1%>% summarize(max(Health..Life.Expectancy., na.rm=T))
+
+
+
+```
+# A new column was made by categorizing the life expectancies as "high, "medium", or "low". High was a life expectancy 0.75 or higher, and low was 0.25 and below. This was done by mutating the data.Next, I wanted to obtain summary statistics for different variables in the dataset. I used a variety of statistics, including mean, standard deviation, minimum, maximum, and variance. The variables I explored were Happiness Scores,Confidence intervals, Family statistics, GDP, Life Expectancy, Freedom, and Trust. For a few of them, I grouped by Country and Region. I was surprised to see that the minimum happiness score was. 2.905 out of 10. That seemed really low to me, but the max was only 7.526. Another interesting statistic was that the mean Life expectancy was 0.557619.
+
+
+```{r}
+library(tidyverse)
+library(maps) #install.packages("maps") if not on the servers
+
+world <- map_data("world")
+ggplot(WHR.HAC1)+geom_point(aes(Happiness.Score,Spirit_PerCapita,color=Country))+
+  geom_polygon(aes(long, lat, group=group), data = world, fill = "red") + xlim(150,200)+ylim(-50,0) + 
+  ggtitle("Heat Map of Happiness and Alcohol Consumption across Countries") +
+  theme(plot.title = element_text(size = rel(1.5)))
+```
+
+## This plot, a heat map, is used to show what areas of the world had the highest and lowest happiness scores and alcohol (spirit) consumption per capita. In areas where there are darker colors, it shows the countries that have the highest levels of scores. Denmark has the highest happiness score, and Scandinavian countries in general seem to be higher on the scale.
+
+
+
+```{r}
+ggplot(WHR.HAC1, aes(Family))+  
+  geom_bar(aes(y=Happiness.Score,fill=Country),            
+           stat="summary", fun=mean) +
+    theme(axis.text.x = element_text(angle=45, hjust=1),
+          legend.position="none") +
+  ggtitle("Family Values and Happiness Scores") 
+
+```
+#In this plot, Family data was compared with Happiness Score by country. Each country is a different color, and the bars repreesnt how high the happines score was with correlation to family score. The plot ended up showing that there were only three countries with a family score that also resulted in a higher Happiness Score. The family scores were all around the 0.8 range. The Happiness scores ranged from 4 to 6, but the higher the happiness score, the lower the family score.
+
+
+```{r}
+library(ggplot2)
+ggplot(data = WHR.HAC1, aes(x = GDP_PerCapita, y = Health..Life.Expectancy.)) +
+  geom_point(size=2, color = WHR.HAC1$Happiness.Rank) +
+  geom_step(aes(y=Health..Life.Expectancy.), stat="summary", fun=mean) +
+   ggtitle("GDP and Life Expectancy") +
+  xlab("GDP Per Capita") + ylab("Life Expectancy") +
+  theme(plot.title = element_text(size = rel(2)))
+```
+
+# This plot contains data from Life Expectancy in countries compared with GDP per capita. When GDP per capita is around 100, the life expectancy seems to be at it's highest. The colors all represent happiness rank, as well. When GDP is close to 0, life expectancy is also very low. The trend that surprised me the most was how different each country was in happiness level and life expectancy. after a GDP of 250. After the 250 mark, the life expectancy significantly drops.
+
+
+
+```{r}
+library(cluster)
+pam1<- WHR.HAC1 %>% select(-Country, -Region, -Happiness.Rank, -Lower.Confidence.Interval, -Upper.Confidence.Interval, -Hemisphere, -HDI, -Beer_PerCapita, -Spirit_PerCapita, -Wine_PerCapita, -lifeexp_cat) %>% scale %>% pam(3)
+pam1
+pam1$silinfo$avg.width
+plot(pam1,which=2)
+
+pam_dat<-WHR.HAC1%>%select(Happiness.Score, Economy..GDP.per.Capita.,Health..Life.Expectancy.) 
+sil_width<-vector()
+for(i in 2:10){
+pam_fit <- pam(pam_dat, k = i)
+sil_width[i] <- pam_fit$silinfo$avg.width 
+}
+ggplot()+geom_line(aes(x=1,y=sil_width))+scale_x_continuous(name="k",breaks=1)
+glimpse(pam_fit)
+
+
+library(plotly)
+pam_dat%>%plot_ly(x= ~Economy..GDP.per.Capita., y = ~Health..Life.Expectancy., z = ~Happiness.Score, color= ~Economy..GDP.per.Capita.,
+type = "scatter3d", mode = "markers") %>% layout(autosize = F, width = 900, height = 400)
+
+plot(pam1, which=2)
+
+
+```
+
+
+# To begin, I made sure my data from above was tidy and set up correctly. I selected only the numeric variables and then scaled the data. The variables I chose were Happiness.Score, GDP per Capita, and Life Expectancy. The average width of the silhouette was 0.2119253. I chose to use three clusters at this point because these clusters accounted for 0.67 of the data. The silhouette plot shows that the structure is "reasonable". The clusters are by groups of GDP, where some countries are higher and some are lower. The goodness of fit is not very good. It is 0.21, so that is very low and probably not a good fit for this dataset.
+
+
+
+
+
+
+
+```{r}
+
+```
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
