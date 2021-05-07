@@ -6,16 +6,14 @@
     <description>Recent content in Posts on Kirsten Hilling</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Hello R Markdown</title>
-      <link>/post/2015/07/23/hello-r-markdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      <title>Why Choose Sides? The Power of R and Python</title>
+      <link>/post/2021/05/06/welcome-to-kirsten-hilling-s-website/</link>
+      <pubDate>Thu, 06 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/post/2015/07/23/hello-r-markdown/</guid>
-      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+      <guid>/post/2021/05/06/welcome-to-kirsten-hilling-s-website/</guid>
+      <description>There seems to be a constant battle of “R” people and “Python” people. Which is better? What is more practical? Which is cooler? To be honest, they’re both great, but in their own ways. And at the end of the day, just knowing one will severely close you off from the pros of both. R has many pre-installed packages that let users do an endless amount of actions. From data visualization, generating statstics, and much more, using R’s packages makes things a lot more simplified.</description>
     </item>
     
   </channel>

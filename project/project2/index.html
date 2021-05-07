@@ -255,7 +255,7 @@ plot(fitvals,resids); abline(h=0, col=&#39;red&#39;)</code></pre>
 
 resid_resamp%&gt;%t%&gt;%as.data.frame%&gt;%summarize_all(sd)</code></pre>
 <pre><code>##   (Intercept) smokeryes    bmi_c smokeryes:bmi_c
-## 1    190.7226  414.6222 31.34086        66.49275</code></pre>
+## 1    188.9053  417.6947 31.26496        67.03339</code></pre>
 </div>
 <div id="the-standard-errors-for-the-intercept-smokers-bmi-and-the-interaction-between-smokers-and-bmi-are-186.98-413.27-31.14-and-66.85-respectively.-the-intercept-and-smoker-ses-are-slightly-lower-than-the-original-ses-and-the-bmi_c-and-smoker-and-bmi_c-interaction-ses-are-pretty-similar.-compared-to-the-robust-ses-the-intercept-is-higher-the-smokers-are-lower-and-the-bmi-and-smoker-and-bmi_c-interaction-ses-are-once-again-very-similar." class="section level2">
 <h2>The standard errors for the intercept, smokers, bmi, and the interaction between smokers and bmi are 186.98, 413.27, 31.14, and 66.85 respectively. The intercept and smoker SEs are slightly lower than the original SEs, and the bmi_c and smoker and bmi_c interaction SEs are pretty similar. Compared to the robust SEs, the intercept is higher, the smokers are lower, and the bmi and smoker and bmi_c interaction SEs are once again very similar.</h2>
